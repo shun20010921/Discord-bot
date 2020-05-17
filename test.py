@@ -26,6 +26,7 @@ helpmess="""
 "/setrole [channel名]" : [channel名]の既存のテキストチャンネルに権限設定、権限が存在しなければ作成します。
 "/get [channel名]" : [channel名]の閲覧権限を付与します。
 "/create [channel名]" : [channel名]のチャンネル、roleを作成し、発言者に閲覧権限を付与します。
+"/list" : 教科のチャンネル一覧を表示します。
 
 """
 
@@ -42,7 +43,13 @@ async def on_message(message):
         # メッセージ送信者がBotだった場合は無視する
         if message.author.bot:
             return
-        
+        if message.content=='/list':
+            text = ""
+            for ch in message.guild.text_channels:
+                if ch.category_id == 711163039919112243:
+                    text += str(ch.name)+"\n"
+            print(text)
+            await message.channel.send(text)
         if message.content=='/help':
             await message.channel.send(helpmess)
             return
@@ -148,17 +155,6 @@ async def on_message(message):
         await message.channel.send("予期せぬエラーが発生しました。")
         await message.channel.send(str(e))
         return
-
-@bot.event  
-async def on_voice_state_update(member, before, after):  
-    if not before.channel and after.channel:  
-        set_mention_name = after.channel.name  
-        role = discord.utils.get(member.guild.roles, name=set_mention_name)  
-        await member.add_roles(role)  
-    elif before.channel and not after.channel:  
-        remove_mention_name = before.channel.name  
-        role = discord.utils.get(member.guild.roles, name=remove_mention_name)  
-        await member.remove_roles(role)  
 
 
 # Botの起動とDiscordサーバーへの接続
