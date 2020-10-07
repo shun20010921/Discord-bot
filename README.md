@@ -10,7 +10,7 @@ KITの一年生のDiscordのチャンネル整理をするために開発したb
 
 Carl-bot(外部サービス)を利用すると役職付与はリアクションによってすることもできます。
 
-#Requirement
+# Requirement
 
 * discord.py
 
